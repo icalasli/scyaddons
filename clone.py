@@ -28,17 +28,17 @@ from telethon.tl.types import MessageEntityMentionName
 from . import *
 
 
-@ultroid_cmd(pattern="clone ?(.*)")
+@scyther_cmd(pattern="clone ?(.*)")
 async def _(event):
     eve = await eor(event, "`Processing...`")
     reply_message = await event.get_reply_message()
-    whoiam = await event.client(GetFullUserRequest(ultroid_bot.uid))
+    whoiam = await event.client(GetFullUserRequest(scyther_bot.uid))
     if whoiam.about:
-        mybio = str(ultroid_bot.me.id) + "01"
+        mybio = str(scyther_bot.me.id) + "01"
         udB.set(f"{mybio}", whoiam.about)  # saving bio for revert
-    udB.set(f"{ultroid_bot.uid}02", whoiam.user.first_name)
+    udB.set(f"{scyther_bot.uid}02", whoiam.user.first_name)
     if whoiam.user.last_name:
-        udB.set(f"{ultroid_bot.uid}03", whoiam.user.last_name)
+        udB.set(f"{scyther_bot.uid}03", whoiam.user.last_name)
     replied_user, error_i_a = await get_full_user(event)
     if replied_user is None:
         await eve.edit(str(error_i_a))
@@ -64,21 +64,21 @@ async def _(event):
     await event.client(UploadProfilePhotoRequest(pfile))
     await eve.delete()
     await event.client.send_message(
-        event.chat_id, f"**I am `{first_name}` from now...**", reply_to=reply_message
+        event.chat_id, f"**saya adalah `{first_name}` mulai sekarang...**", reply_to=reply_message
     )
 
 
-@ultroid_cmd(pattern="revert$")
+@scyther_cmd(pattern="revert$")
 async def _(event):
     name = OWNER_NAME
     ok = ""
-    mybio = str(ultroid_bot.me.id) + "01"
+    mybio = str(scyther_bot.me.id) + "01"
     bio = "Error : Bio Lost"
     chc = udB.get(mybio)
     if chc:
         bio = chc
-    fname = udB.get(f"{ultroid_bot.uid}02")
-    lname = udB.get(f"{ultroid_bot.uid}03")
+    fname = udB.get(f"{scyther_bot.uid}02")
+    lname = udB.get(f"{scyther_bot.uid}03")
     if fname:
         name = fname
     if lname:
@@ -92,9 +92,9 @@ async def _(event):
     await client(UpdateProfileRequest(first_name=name))
     await client(UpdateProfileRequest(last_name=ok))
     await eor(event, "Succesfully reverted to your account back !")
-    udB.delete(f"{ultroid_bot.uid}01")
-    udB.delete(f"{ultroid_bot.uid}02")
-    udB.delete(f"{ultroid_bot.uid}03")
+    udB.delete(f"{scyther_bot.uid}01")
+    udB.delete(f"{scyther_bot.uid}02")
+    udB.delete(f"{scyther_bot.uid}03")
 
 
 async def get_full_user(event):
