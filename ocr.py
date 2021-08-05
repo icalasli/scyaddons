@@ -1,17 +1,8 @@
-#
-# Ultroid - UserBot
-#
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# PLease read the GNU Affero General Public License in
-# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-#
-
-
 """
-✘ Commands Available -
+📚 Commands Available -
 
-• `{i}ocr <language code><reply to a photo>`
-    text recognition service.
+• `{i}ocr <language code><balas ke foto>`
+    mengenali teks dari gambar.
 
 """
 
@@ -21,21 +12,21 @@ from telegraph import upload_file as uf
 
 from . import *
 
-TE = f"API not found, Please get it from ocr.space and set\n\ncommand `{HNDLR}setredis OCR_API your-api-key`"
+TE = f"API tidak ditemukan, dapatkan dari ocr.space dan set\n\ncommand `{HNDLR}setredis OCR_API your-api-key`"
 
 
 @ultroid_cmd(pattern="ocr ?(.*)")
 async def ocrify(ult):
     if not ult.is_reply:
-        return await eor(ult, "`Reply to Photo...`")
-    msg = await eor(ult, "`Processing..`")
+        return await eor(ult, "`balas ke foto...`")
+    msg = await eor(ult, "`memproses...`")
     OAPI = udB.get("OCR_API")
     if not OAPI:
         return await msg.edit(TE)
     pat = ult.pattern_match.group(1)
     repm = await ult.get_reply_message()
     if not (repm.media and repm.media.photo):
-        return await msg.edit("`Not a Photo..`")
+        return await msg.edit("`bukan foto...`")
     dl = await repm.download_media()
     if pat:
         atr = f"&language={pat}&"
