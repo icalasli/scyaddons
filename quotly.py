@@ -1,16 +1,7 @@
-#
-# Ultroid - UserBot
-#
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# PLease read the GNU Affero General Public License in
-# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
-✘ Commands Available -
-
+📚 Commands Available -
 • `{i}quotly | {i}qbot <colour name/code><replying a message>`
     send stickers to current chat with QuotlyBot.
-
 • `{i}q <reply>`
     Make sticker quote without QuotlyBot
 """
@@ -22,17 +13,17 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from . import *
 
-ERR = "`Can you kindly disable your forward privacy settings for good?`"
+ERR = "`mohon matikan privasi mode pesan terusan milik anda.`"
 
 
 @ultroid_cmd(pattern="(quotly|qbot) ?(.*)")
 async def _(event):
     if not event.reply_to_msg_id:
-        return await eor(event, "```Reply to any user message.```")
+        return await eor(event, "```balas ke sebuah pesan.```")
     reply_message = await event.get_reply_message()
     chat = "@QuotLyBot"
     reply_message.sender
-    ac = await eor(event, "```Making a Quote```")
+    ac = await eor(event, "```membuat quote...```")
     col = event.pattern_match.group(2)
     async with event.client.conversation(chat) as conv:
         try:
@@ -46,7 +37,7 @@ async def _(event):
             response = await response
             await ultroid_bot.send_read_acknowledge(chat)
         except YouBlockedUserError:
-            return await event.reply("```Please unblock @QuotLyBot and try again```")
+            return await event.reply("```mohon unblokir @QuotLyBot dan coba lagi```")
         if response.text.startswith("Hi!"):
             await eor(event, ERR)
         else:
@@ -481,11 +472,7 @@ async def _(event):
     reply = await event.get_reply_message()
     msg = reply.message
     repliedreply = await reply.get_reply_message()
-    user = (
-        await event.client.get_entity(reply.forward.sender)
-        if reply.fwd_from
-        else reply.sender
-    )
+    user = await reply.get_sender()
     res, canvas = await process(msg, user, event.client, reply, repliedreply)
     if not res:
         return
@@ -494,4 +481,3 @@ async def _(event):
         event.chat_id, "sticker.webp", reply_to=event.reply_to_msg_id
     )
     os.remove("sticker.webp")
-
