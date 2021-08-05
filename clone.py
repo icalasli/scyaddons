@@ -64,13 +64,13 @@ async def _(event):
 async def _(event):
     name = OWNER_NAME
     ok = ""
-    mybio = str(scyther_bot.me.id) + "01"
+    mybio = str(ultroid_bot.me.id) + "01"
     bio = "Error : Bio Lost"
     chc = udB.get(mybio)
     if chc:
         bio = chc
-    fname = udB.get(f"{scyther_bot.uid}02")
-    lname = udB.get(f"{scyther_bot.uid}03")
+    fname = udB.get(f"{ultroid_bot.uid}02")
+    lname = udB.get(f"{ultroid_bot.uid}03")
     if fname:
         name = fname
     if lname:
