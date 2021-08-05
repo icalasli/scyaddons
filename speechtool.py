@@ -1,17 +1,7 @@
-#
-# Ultroid - UserBot
-#
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# PLease read the GNU Affero General Public License in
-# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-#
-# Ported from Telebot
-
-
 """
-✘ Commands Available -
+📚 Commands Available -
 
-• {i}tts LanguageCode <reply to a message>
+• {i}tts LanguageCode <balas ke pesan>
 • {i}tts LangaugeCode | text to speak
 
 """
@@ -40,7 +30,7 @@ async def _(event):
     elif "|" in input_str:
         lan, text = input_str.split("|")
     else:
-        await eor(event, "Invalid Syntax. Module stopping.")
+        await eor(event, "invalid syntax, module dihentikan.")
         return
     text = text.strip()
     lan = lan.strip()
@@ -77,6 +67,6 @@ async def _(event):
             file=required_file_name,
        )
         os.remove(required_file_name)
-        await eod(event, "Processed {} ({}) in {} seconds!".format(text[0:97], lan, ms))
+        await eod(event, "memproses {} ({}) dalam {} detik!".format(text[0:97], lan, ms))
     except Exception as e:
         await eor(event, str(e))
