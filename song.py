@@ -1,17 +1,5 @@
-#    Ultroid - UserBot
-#    Copyright 2020 (c)
-
-# For song and vsong
-#    Thanks to @AvinashReddy for the ytdl base and @xditya
-# Lyrics ported from Dark Cobra
-#
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# PLease read the GNU Affero General Public License in
-# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
-
 """
-✘ Commands Available -
+📚 Commands Available -
 • `{i}song <search query>`
     upload song as mp3.
 
@@ -52,10 +40,10 @@ async def download_video(ult):
     a = ult.text
     if len(a) <= 5 and a[5] == "s":
         return
-    x = await eor(ult, "Searching...")
+    x = await eor(ult, "mencari...")
     url = ult.pattern_match.group(1)
     if not url:
-        return await x.edit("**Error**\nUsage - `.song <song name>`")
+        return await x.edit("**Error**\nUsage - `.song <nama lagu>`")
     search = SearchVideos(url, offset=1, mode="json", max_results=1)
     test = search.result()
     p = json.loads(test)
@@ -63,9 +51,9 @@ async def download_video(ult):
     try:
         url = q[0]["link"]
     except BaseException:
-        return await x.edit("`No matching song found...`")
+        return await x.edit("`lagu tidak ditemukan...`")
     type = "audio"
-    await x.edit(f"`Preparing to download {url}...`")
+    await x.edit(f"__bersiap mengunduh {url}...__")
     if type == "audio":
         opts = {
             "format": "bestaudio",
@@ -86,7 +74,7 @@ async def download_video(ult):
             "logtostderr": False,
         }
     try:
-        await x.edit("`Getting info...`")
+        await x.edit("`mengambil info...`")
         with YoutubeDL(opts) as rip:
             rip_data = rip.extract_info(url)
     except DownloadError as DE:
@@ -156,10 +144,10 @@ async def download_video(ult):
 
 @ultroid_cmd(pattern="vsong (.*)")
 async def download_vsong(ult):
-    x = await eor(ult, "Processing..")
+    x = await eor(ult, "memproses...")
     url = ult.pattern_match.group(1)
     if not url:
-        return await x.edit("**Error**\nUsage - `.vsong <song name>`")
+        return await x.edit("**Error**\nUsage - `.vsong <nama lagu>`")
     search = SearchVideos(url, offset=1, mode="json", max_results=1)
     test = search.result()
     p = json.loads(test)
@@ -167,9 +155,9 @@ async def download_vsong(ult):
     try:
         url = q[0]["link"]
     except BaseException:
-        return await x.edit("`No matching songs found...`")
+        return await x.edit("`lagu tidak ditemukan...`")
     type = "audio"
-    await x.edit("`Preparing to download...`")
+    await x.edit("`bersiap mengunduh...`")
     if type == "audio":
         opts = {
             "format": "best",
@@ -186,7 +174,7 @@ async def download_vsong(ult):
             "quiet": True,
         }
     try:
-        await x.edit("`Fetching data, please wait..`")
+        await x.edit("`mengambil data, tunggu sebentar...`")
         with YoutubeDL(opts) as rip:
             rip_data = rip.extract_info(url)
     except DownloadError as DE:
@@ -262,14 +250,14 @@ async def _(event):
     except Exception:
         return await eor(
             event,
-            "You need to join [this]"
+            "you need to join [this]"
             + "(https://t.me/joinchat/DdR2SUvJPBouSW4QlbJU4g)"
             + "group for this module to work.",
         )
     args = event.pattern_match.group(1)
     if not args:
-        return await eor(event, "`Enter song name`")
-    okla = await eor(event, "processing...")
+        return await eor(event, "`berikan nama lagu!`")
+    okla = await eor(event, "memproses...")
     chat = -1001271479322
     current_chat = event.chat_id
     try:
@@ -279,4 +267,4 @@ async def _(event):
             await ultroid_bot.send_file(current_chat, event, caption=event.message)
         await okla.delete()
     except Exception:
-        return await eor(okla, "`Song not found.`")
+        return await eor(okla, "`song tidak ditemukan.`")
