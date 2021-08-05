@@ -1,26 +1,17 @@
-#
-# Ultroid - UserBot
-#
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# PLease read the GNU Affero General Public License in
-# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
-# Ported Plugin
-
 """
-✘ Commands Available -
+📚 Commands Available -
 
 • `{i}autoname`
-   `Starts AUTONAME`.
+   `mulai autoname.`.
 
 • `{i}stopname`
-   `Stops AUTONAME.`
+   `hentikan autoname.`
 
 • `{i}autobio`
-   `Starts AUTOBIO.`
+   `mulai autobio.`
 
 • `{i}stopbio`
-   `Stops AUTOBIO.`
+   `hentikan autobio.`
 """
 
 from . import *
@@ -33,10 +24,10 @@ async def autoname_(event):
     match = event.pattern_match.group(1)
     if match == "stop":
       udB.delete("AUTONAME")
-      await eor(event, "`AUTONAME has been Stopped !`")
+      await eor(event, "`autoname telah dihentikan !`")
       return
     udB.set("AUTONAME", "True")
-    await eod(event, "`Started AUTONAME`")
+    await eod(event, "`memulai autoname`")
     while True:
         getn = udB.get("AUTONAME")
         if not getn:
@@ -49,7 +40,7 @@ async def autoname_(event):
                     first_name=name
                 )
             )
-        await asyncio.sleep(1000)
+        await asyncio.sleep(1111)
 
 
 @ultroid_cmd(pattern="(auto|stop)bio$")
@@ -57,16 +48,16 @@ async def autoname_(event):
     match = event.pattern_match.group(1)
     if match == "stop":
       udB.delete("AUTOBIO")
-      await eor(event, "`AUTOBIO has been Stopped !`")
+      await eor(event, "`autobio telah dihentikan !`")
       return
     udB.set("AUTOBIO", "True")
-    await eod(event, "`Started AUTONAME`")
-    BIOS = ["Busy Today !",
-            "ULTROID USER",
-            "Enjoying Life!",
-            "Unique as Always!"
-            "Sprinkling a bit of magic",
-            "Intelligent !"]
+    await eod(event, "`memulai autobio`")
+    BIOS = ["sedang sibuk !",
+            "caper bet lu tolol",
+            "ape liat liat bio gua?, naksir yah?..",
+            "hai beban ortu, apa kabar 👋🏻"
+            "cie nge stalking, xixixi",
+            "ga terima pm, pc segala macam, gua sibuk !"]
     while True:
         getn = udB.get("AUTOBIO")
         if not getn:
@@ -80,4 +71,4 @@ async def autoname_(event):
                     about=name,
                 )
             )
-        await asyncio.sleep(1000)
+        await asyncio.sleep(1111)
