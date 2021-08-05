@@ -1,19 +1,10 @@
-# Ultroid - UserBot
-# Copyright (C) 2020 TeamUltroid
-#
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# PLease read the GNU Affero General Public License in
-# <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-
 """
-✘ Commands Available -
-
+📚 Commands Available -
 •`{i}sspam <reply to sticker>`
    it spam the whole stickers in that pack.
-
 """
 
-from telethon import utils
+from telethon.utils import get_input_document
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.types import InputStickerSetID, InputStickerSetShortName
 
@@ -24,7 +15,7 @@ from . import *
 async def _(e):
     x = await e.get_reply_message()
     if not (x and x.media and hasattr(x.media, "document")):
-        return await eod(e, "`Reply To Sticker Only`")
+        return await eod(e, "`balas ke sticker saja.`")
     set = x.document.attributes[1]
     sset = await e.client(
         GetStickerSetRequest(
@@ -36,7 +27,7 @@ async def _(e):
     )
     pack = sset.set.short_name
     docs = [
-        utils.get_input_document(x)
+        get_input_document(x)
         for x in (
             await e.client(GetStickerSetRequest(InputStickerSetShortName(pack)))
         ).documents
